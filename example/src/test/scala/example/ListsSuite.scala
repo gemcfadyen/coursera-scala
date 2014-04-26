@@ -115,51 +115,55 @@ class ListsSuite extends FunSuite {
    * however it is recommended to write an individual `test` statement for
    * every tested aspect of a method.
    */
-  test("sum of a few numbers") {
+  test("should sum up the values of all integers in the list") {
     assert(sum(List(1,2,0)) === 3)
   }
 
-  test("sum of an empty list is 0") {
+  test("should sum up the value of an empty list to be zero") {
     assert(sum(Nil) === 0)
   }
 
-  test("sum of a list is not effected by negative numbers") {
+  test("should sum up the negative values in the list correctly") {
     assert(sum(List(0, -3, -2)) === -5)
   }
 
-  test("sum of a list containing duplicated values") {
+  test("should sum up all values in the list and account for each duplicated number") {
     assert(sum(List(2, 2, 3)) === 7)
   }
 
-  test("sum of a list containing only zeros is zero") {
+  test("should sum up the list containing only zeros") {
     assert(sum(List(0, 0, 0, 0)) === 0)
   }
   
-  test("max of a few numbers") {
+  test("should find the correct max integer in the list") {
     assert(max(List(3, 7, 2)) === 7)
   }
 
-  test("max of two numbers") {
+  test("should find the correct maximum when one value is zero") {
     assert(max(List(2, 0))=== 2)
   }
 
-  test("maximum of a list containing duplicated values") {
+  test("should find the correct maximum when all values are the same") {
     assert(max(List(0, 0, 0))=== 0)
   }
 
-  test("max of a list containing one entry is that entry") {
+  test("should return the head of the list as the max value when list contains only one element") {
     assert(max(List(8)) === 8)
   }
 
-  test("max of a list is not effected by negative numbers") {
+  test("should recognise that negative numbers are less than positive numbers when calculating the max") {
     assert(max(List(9, -8, 8)) === 9)
   }
 
-  test("maximum of a list containing negative numbers and zero") {
+  test("should correctly calculate the max when all numbers are negative") {
+    assert(max(List(-9, -8, -4)) === -4)
+  }
+
+  test("should correctly identify that zero is the maximum when compared to all negative numbers") {
     assert(max(List(-1, -5, 0, -8, -7)) === 0)
   }
 
-  test("max of an empty list throws an exception") {
+  test("should throw an exception when the maximum is calculated on an empty list") {
     intercept[NoSuchElementException] {
       max(Nil)
     }
