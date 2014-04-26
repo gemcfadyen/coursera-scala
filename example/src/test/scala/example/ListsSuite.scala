@@ -5,6 +5,7 @@ import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
+
 /**
  * This class implements a ScalaTest test suite for the methods in object
  * `Lists` that need to be implemented as part of this assignment. A test
@@ -72,7 +73,7 @@ class ListsSuite extends FunSuite {
    * We recommend to always use the `===` equality operator when writing tests.
    */
   test("details why one plus one is not three") {
-    assert(1 + 1 === 3) // Fix me, please!
+    assert(1 + 1 === 2) // Fix me, please!
   }
 
 
@@ -121,8 +122,25 @@ class ListsSuite extends FunSuite {
   test("sum of an empty list is 0") {
     assert(sum(Nil) === 0)
   }
+
+  test("sum of a list is not effected by negative numbers") {
+    assert(sum(List(0, -3, -2)) === -5)
+  }
   
   test("max of a few numbers") {
     assert(max(List(3, 7, 2)) === 7)
+  }
+
+  test("max of a list containing one entry is that entry") {
+    assert(max(List(8)) === 8)
+  }
+
+  test("max of a list is not effected by negative numbers") {
+    assert(max(List(9, -8, 8)) === 9)
+  }
+  test("max of an empty list throws an exception") {
+    intercept[NoSuchElementException] {
+      max(Nil)
+    }
   }
 }
