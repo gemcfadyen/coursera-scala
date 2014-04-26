@@ -126,6 +126,14 @@ class ListsSuite extends FunSuite {
   test("sum of a list is not effected by negative numbers") {
     assert(sum(List(0, -3, -2)) === -5)
   }
+
+  test("sum of a list containing duplicated values") {
+    assert(sum(List(2, 2, 3)) === 7)
+  }
+
+  test("sum of a list containing only zeros is zero") {
+    assert(sum(List(0, 0, 0, 0)) === 0)
+  }
   
   test("max of a few numbers") {
     assert(max(List(3, 7, 2)) === 7)
