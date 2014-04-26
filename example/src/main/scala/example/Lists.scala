@@ -49,17 +49,26 @@ object Lists {
    * @return The largest element in `xs`
    * @throws java.util.NoSuchElementException if `xs` is an empty list
    */
-  def max(xs: List[Int]): Int =
+  def max(xs: List[Int]): Int = {
     if (xs.isEmpty) {
       throw new NoSuchElementException("There is no max on an empty list")
     }
-    else {
-      var largest = xs(0)
-      for (i <- 1 to xs.length - 1) {
-        if (largest < xs(i)) {
-          largest = xs(i)
-        }
-      }
-      return largest
+    var largest = xs.head
+    if(xs.length == 1) {
+      getLargest(largest, xs.head)
     }
+    else {
+      var nextBiggest = max(xs.tail)
+      getLargest(largest, nextBiggest)
+    }
+  }
+
+  def getLargest(first: Int, second: Int): Int = {
+    if (first > second) {
+      first;
+    }
+    else {
+      second;
+    }
+  }
 }
