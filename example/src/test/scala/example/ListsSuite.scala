@@ -131,6 +131,14 @@ class ListsSuite extends FunSuite {
     assert(max(List(3, 7, 2)) === 7)
   }
 
+  test("max of two numbers") {
+    assert(max(List(2, 0))=== 2)
+  }
+
+  test("maximum of a list containing duplicated values") {
+    assert(max(List(0, 0, 0))=== 0)
+  }
+
   test("max of a list containing one entry is that entry") {
     assert(max(List(8)) === 8)
   }
@@ -138,6 +146,11 @@ class ListsSuite extends FunSuite {
   test("max of a list is not effected by negative numbers") {
     assert(max(List(9, -8, 8)) === 9)
   }
+
+  test("maximum of a list containing negative numbers and zero") {
+    assert(max(List(-1, -5, 0, -8, -7)) === 0)
+  }
+
   test("max of an empty list throws an exception") {
     intercept[NoSuchElementException] {
       max(Nil)

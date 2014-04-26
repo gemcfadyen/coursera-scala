@@ -55,7 +55,7 @@ object Lists {
     }
     var largest = xs.head
     if(xs.length == 1) {
-      getLargest(largest, xs.head)
+      xs.head
     }
     else {
       var nextBiggest = max(xs.tail)
