@@ -24,9 +24,9 @@ object Lists {
    * @return The sum of all elements in `xs`
    */
   def sum(xs: List[Int]): Int = {
-    var total = 0;
+    var total = 0
     if (xs.isEmpty) {
-      total = 0;
+      total = 0
     }
     else {
       total = xs.head
@@ -58,8 +58,8 @@ object Lists {
       xs.head
     }
     else {
-      var nextBiggest = max(xs.tail)
-      getLargest(largest, nextBiggest)
+      var nextItem = max(xs.tail)
+      getLargest(largest, nextItem)
     }
   }
 
