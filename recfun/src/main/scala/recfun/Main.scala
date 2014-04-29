@@ -56,14 +56,13 @@ object Main {
 
       else
         balanceCount(list.tail, count + getIncrement(list.head))
-
     }
 
     balanceCount(chars, 0)
   }
 
 
-  def lengthList(chars: List[Char]): Int = {
+  /*def lengthList(chars: List[Char]): Int = {
     def length(list: List[Char], size: Integer): Int = {
       if (list.isEmpty) {
         size
@@ -75,10 +74,28 @@ object Main {
 
     length(chars, 0)
   }
-
+*/
 
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = 1
+  def countChange(money: Int, coins: List[Int]): Int = {
+    def calculateCombinationsOfSingleCoins(total: Int, change: List[Int], noOfWays:Int) : Int = {
+     if(change.isEmpty) {noOfWays}
+
+     else if(total % change.head == 0)
+        calculateCombinationsOfSingleCoins(total, change.tail, noOfWays+1)
+
+      else {
+       calculateCombinationsOfSingleCoins(total, change.tail, noOfWays)
+     }
+    }
+
+  /*  def calculateCombinationsOfCoins(total: Int, change: List[Int], noOfWays:Int) : Int = {
+
+      calculateCombinationsOfCoins(total - change.head, change.tail, noOfWays)
+    }
+*/
+    calculateCombinationsOfSingleCoins(money, coins,  0)// + calculateCombinationsOfCoins(money, coins, 0)
+  }
 }
