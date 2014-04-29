@@ -1,6 +1,6 @@
 package recfun
 
-import common._
+import scala.annotation.tailrec
 
 object Main {
   def main(args: Array[String]) {
@@ -27,19 +27,54 @@ object Main {
       1
     }
     else {
-      var total = 0;
-      total = pascal(c - 1, r - 1) + pascal(c, r - 1)
-      total
+      pascal(c - 1, r - 1) + pascal(c, r - 1)
     }
   }
 
   /**
    * Exercise 2
    */
-  // def balance(chars: List[Char]): Boolean = ???
+
+  def balance(chars: List[Char]): Boolean = {
+    @tailrec
+    def balanceCount(list: List[Char], count: Int): Boolean = {
+      if (count < 0)
+        false
+
+      else if (list.isEmpty)
+        (count == 0)
+
+      else if (list.head == '(')
+        balanceCount(list.tail, count + 1)
+
+      else if (list.head == ')')
+        balanceCount(list.tail, count - 1)
+
+      else
+        balanceCount(list.tail, count)
+
+    }
+
+    balanceCount(chars, 0)
+  }
+
+
+  def lengthList(chars: List[Char]): Int = {
+    def length(list: List[Char], size: Integer): Int = {
+      if (list.isEmpty) {
+        size
+      }
+      else {
+        length(list.tail, size + 1)
+      }
+    }
+
+    length(chars, 0)
+  }
+
 
   /**
    * Exercise 3
    */
-  // def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = 1
 }

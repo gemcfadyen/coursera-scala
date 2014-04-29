@@ -38,6 +38,10 @@ class PascalSuite extends FunSuite {
     assert(pascal(3, 3) === 1)
   }
 
+ /* test("pascal: col=40, row=2000") {
+    assert(pascal(40, 2000) === 1095651)
+  }*/
+
   test("should throw an exception when the column index is outside permittable range") {
     intercept[StackOverflowError] {
       pascal(1, 0)
