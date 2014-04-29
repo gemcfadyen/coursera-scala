@@ -23,17 +23,13 @@ object Lists {
    * @param xs A list of natural numbers
    * @return The sum of all elements in `xs`
    */
-  def sum(xs: List[Int]): Int = {
-    var total = 0
+  def sum(xs: List[Int]): Int =
     if (xs.isEmpty) {
-      total = 0
+      0
     }
     else {
-      total = xs.head
-      total += sum(xs.tail)
+      xs.head + sum(xs.tail)
     }
-    total
-  }
 
 
   /**
@@ -53,13 +49,11 @@ object Lists {
     if (xs.isEmpty) {
       throw new NoSuchElementException("There is no max on an empty list")
     }
-    var largest = xs.head
-    if(xs.length == 1) {
+    if (xs.length == 1) {
       xs.head
     }
     else {
-      var nextItem = max(xs.tail)
-      getLargest(largest, nextItem)
+      getLargest(xs.head, max(xs.tail))
     }
   }
 
