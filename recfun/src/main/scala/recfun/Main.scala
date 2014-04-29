@@ -36,6 +36,16 @@ object Main {
    */
 
   def balance(chars: List[Char]): Boolean = {
+
+    def getIncrement(element: Char): Int = {
+      if (element == '(')
+        1
+      else if (element == ')')
+        -1
+      else
+        0
+    }
+
     @tailrec
     def balanceCount(list: List[Char], count: Int): Boolean = {
       if (count < 0)
@@ -44,14 +54,8 @@ object Main {
       else if (list.isEmpty)
         (count == 0)
 
-      else if (list.head == '(')
-        balanceCount(list.tail, count + 1)
-
-      else if (list.head == ')')
-        balanceCount(list.tail, count - 1)
-
       else
-        balanceCount(list.tail, count)
+        balanceCount(list.tail, count + getIncrement(list.head))
 
     }
 
