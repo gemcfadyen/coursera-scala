@@ -77,6 +77,9 @@ class FunSetSuite extends FunSuite {
     val s1 = singletonSet(1)
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
+    val s4 = singletonSet(4)
+    val s5 = singletonSet(5)
+
   }
 
   /**
@@ -127,6 +130,29 @@ class FunSetSuite extends FunSuite {
 
         !contains(setMadeUpOfSingletonSetAndNil, 0)
       }
+    }
+  }
+
+  test("intersect contains elements present in both sets") {
+    new TestSets {
+      val s = intersect(s1, s1)
+      assert(contains(s, 1), "element 1 is in both sets")
+      assert(!contains(s, 2), "combined set does contain 2")
+
+      var setOfNumbersUpToFive = union(s1, s2)
+      setOfNumbersUpToFive = union(setOfNumbersUpToFive, s3)
+      setOfNumbersUpToFive = union(setOfNumbersUpToFive, s4)
+      setOfNumbersUpToFive = union(setOfNumbersUpToFive, s5)
+
+      val setOfEvenNumbers = union(s2, s4)
+
+      val intesectSet = intersect(setOfNumbersUpToFive, setOfEvenNumbers)
+      assert(!contains(intesectSet, 1))
+      assert(contains(intesectSet, 2))
+      assert(!contains(intesectSet, 3))
+      assert(contains(intesectSet, 4))
+      assert(!contains(intesectSet, 5))
+
     }
   }
 }
