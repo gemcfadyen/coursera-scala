@@ -171,4 +171,24 @@ class FunSetSuite extends FunSuite {
 
     }
   }
+
+  test("filter gathers items in the set that satisfy a predicate") {
+    new TestSets {
+      val filterValuesLessThan3: Set = filter(setOfNumbersUpToFive, (x: Int) => x < 3)
+
+      assert(contains(filterValuesLessThan3, 1))
+      assert(contains(filterValuesLessThan3, 2))
+      assert(!contains(filterValuesLessThan3, 3))
+      assert(!contains(filterValuesLessThan3, 4))
+      assert(!contains(filterValuesLessThan3, 5))
+
+      val filterValuesThatEqual2: Set = filter(setOfNumbersUpToFive, (x: Int) => x == 2)
+      assert(!contains(filterValuesThatEqual2, 1))
+      assert(contains(filterValuesThatEqual2, 2))
+      assert(!contains(filterValuesThatEqual2, 3))
+      assert(!contains(filterValuesThatEqual2, 4))
+      assert(!contains(filterValuesThatEqual2, 5))
+
+    }
+  }
 }
