@@ -9,7 +9,7 @@ import org.scalatest.junit.JUnitRunner
 class CountChangeSuite extends FunSuite {
 
   import Main.countChange
-  import Main.getListOfChangeCombinations
+
   test("should return one combination if there is only 1's available") {
     assert(countChange(100, List(1)) === 1)
   }
