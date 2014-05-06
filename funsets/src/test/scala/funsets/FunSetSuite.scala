@@ -80,7 +80,15 @@ class FunSetSuite extends FunSuite {
     val s4 = singletonSet(4)
     val s5 = singletonSet(5)
 
+    var setOfNumbersUpToFive = union(s1, s2)
+    setOfNumbersUpToFive = union(setOfNumbersUpToFive, s3)
+    setOfNumbersUpToFive = union(setOfNumbersUpToFive, s4)
+    setOfNumbersUpToFive = union(setOfNumbersUpToFive, s5)
+
+    val setOfEvenNumbers = union(s2, s4)
+
   }
+
 
   /**
    * This test is currently disabled (by using "ignore") because the method
@@ -139,19 +147,27 @@ class FunSetSuite extends FunSuite {
       assert(contains(s, 1), "element 1 is in both sets")
       assert(!contains(s, 2), "combined set does contain 2")
 
-      var setOfNumbersUpToFive = union(s1, s2)
-      setOfNumbersUpToFive = union(setOfNumbersUpToFive, s3)
-      setOfNumbersUpToFive = union(setOfNumbersUpToFive, s4)
-      setOfNumbersUpToFive = union(setOfNumbersUpToFive, s5)
-
-      val setOfEvenNumbers = union(s2, s4)
-
       val intesectSet = intersect(setOfNumbersUpToFive, setOfEvenNumbers)
       assert(!contains(intesectSet, 1))
       assert(contains(intesectSet, 2))
       assert(!contains(intesectSet, 3))
       assert(contains(intesectSet, 4))
       assert(!contains(intesectSet, 5))
+
+    }
+  }
+
+  test("diff gathers the elements which are only in the first set") {
+    new TestSets {
+      val s = diff(s1, s1)
+      assert(!contains(s, 1), "element 1 is in both sets so is not in the combined diff")
+
+      val diffSet = diff(setOfNumbersUpToFive, setOfEvenNumbers)
+      assert(contains(diffSet, 1))
+      assert(!contains(diffSet, 2))
+      assert(contains(diffSet, 3))
+      assert(!contains(diffSet, 4))
+      assert(contains(diffSet, 5))
 
     }
   }
