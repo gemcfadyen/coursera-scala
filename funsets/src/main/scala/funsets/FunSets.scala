@@ -69,7 +69,7 @@ object FunSets {
   def forall(s: Set, p: Int => Boolean): Boolean = {
     def iter(a: Int): Boolean = {
       if (!withinBounds(a)) true
-      else if (contains(s, a) && !p(a))   false
+      else if (contains(s, a) && !p(a)) false
       else iter(a + 1)
     }
     iter(-bound)
@@ -81,30 +81,27 @@ object FunSets {
    */
   def exists(s: Set, p: Int => Boolean): Boolean = {
      !forall(s, (x: Int) => !p(x))
+//    def iter(a: Int): Boolean = {
+//      if (!withinBounds(a)) false // !forall would make this true if all items satisfy the original predicate, inline with the original forall
+//      else if (contains(s, a) && p(a)) true //!p(a) would mean this would return true if there was an item that DIDNT match p. !forall would make this return false
+//      else if (contains(s, a) && !p(a)) iter(a + 1) // !p(x) would mean this would be matched if the original p is satisfied, so we fall out of the loop only when out of bounds, or there is an item which does not satisfy the original predicate.
+//      else iter(a + 1)
+//    }
+//    iter(-bound)
   }
 
   //  So using !forall(s, (x:Int)=>!p(x))  actually creates the predicate condition
   //  else if (contains(s, a) && p(a)) true
-  //  else if (contains(s, a) && !p(a))   false
-  //  which could be added to the original foreach implementation
-
-  // eg: exists could be defined as:
-//  def iter(a: Int): Boolean = {
-//    if (!withinBounds(a)) false
-//    else if (contains(s, a) && p(a)) true
-//    else if (contains(s, a) && !p(a)) iter(a + 1)  // IE: if it IS p(a) (as we have !p(a) then we want to continue to see if there are any real matches otherwise return false to fall out of loop and return false (but !foall would make this true)
-//    else iter(a + 1)
-//  }
-//  iter(-bound)
-
-  /**
+  //  else if (contains(s, a) && !p(a)) false
+  
+   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
   def map(s: Set, f: Int => Int): Set = {
     @tailrec
-    def iter(a: Int, temporarySet:Set): Set = {
+    def iter(a: Int, temporarySet: Set): Set = {
       if (!withinBounds(a)) temporarySet
-      else if (contains(s, a) ) iter(a+1, union(temporarySet, singletonSet(f(a))))
+      else if (contains(s, a)) iter(a + 1, union(temporarySet, singletonSet(f(a))))
       else iter(a + 1, temporarySet)
     }
     iter(-bound, Set())
