@@ -57,7 +57,7 @@ object FunSets {
   /**
    * The bounds for `forall` and `exists` are +/- 1000.
    */
-  val bound = 1000
+  val bound = 5
 
   def withinBounds(x: Int): Boolean = {
     (x <= bound || x <= -bound)
@@ -80,7 +80,7 @@ object FunSets {
    * that satisfies `p`.
    */
   def exists(s: Set, p: Int => Boolean): Boolean = {
-    !forall(s, (x: Int) => !p(x))
+     !forall(s, (x: Int) => !p(x))
   }
 
   //  So using !forall(s, (x:Int)=>!p(x))  actually creates the predicate condition
@@ -89,13 +89,13 @@ object FunSets {
   //  which could be added to the original foreach implementation
 
   // eg: exists could be defined as:
-  //  def iter(a: Int): Boolean = {
-  //    if (!withinBounds(a)) true
-  //    else if (contains(s, a) && p(a)) true
-  //    else if (contains(s, a) && !p(a)) false  -- IE: if it IS p(a) (as we have !p(a) then return false, but the !forall makes this true
-  //    else iter(a + 1)
-  //  }
-  //  iter(-bound)
+//  def iter(a: Int): Boolean = {
+//    if (!withinBounds(a)) false
+//    else if (contains(s, a) && p(a)) true
+//    else if (contains(s, a) && !p(a)) iter(a + 1)  // IE: if it IS p(a) (as we have !p(a) then we want to continue to see if there are any real matches otherwise return false to fall out of loop and return false (but !foall would make this true)
+//    else iter(a + 1)
+//  }
+//  iter(-bound)
 
   /**
    * Returns a set transformed by applying `f` to each element of `s`.

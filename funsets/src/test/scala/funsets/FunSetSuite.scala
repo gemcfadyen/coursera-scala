@@ -207,11 +207,17 @@ class FunSetSuite extends FunSuite {
       val isAtLeastOneElementLessThan3 = exists(setOfNumbersUpToFive, (x: Int) => x < 3)
       assert(isAtLeastOneElementLessThan3, "no items are < 3")
 
+      val isAtLeastOneElementEqualTo2 = exists(setOfNumbersUpToFive,(x: Int) => x == 2)
+      assert(isAtLeastOneElementEqualTo2, "no items are == 2")
+
       val isAtLeastOneElementGreaterThan9 = exists(setOfNumbersUpToFive, (x: Int) => x > 9)
       assert(!isAtLeastOneElementGreaterThan9)
 
       val isThereAtLeastOneElementEqualTo1 = exists(setOfNumbersUpToFive, (x: Int) => x == 1)
       assert(isThereAtLeastOneElementEqualTo1)
+
+      val setOfAllEvenNumbersAnd3ShouldContainAnOddNum = exists(union(setOfEvenNumbers, singletonSet(3)), (x:Int) => x % 2 == 1)
+      assert(setOfAllEvenNumbersAnd3ShouldContainAnOddNum, "no odd numbers")
     }
   }
 
