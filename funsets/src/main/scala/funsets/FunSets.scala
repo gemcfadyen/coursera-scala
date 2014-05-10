@@ -58,28 +58,41 @@ object FunSets {
    */
   val bound = 1000
 
+  def withinBounds(x: Int): Boolean = {
+    (x <= bound || x <= -bound)
+  }
+
   /**
    * Returns whether all bounded integers within `s` satisfy `p`.
    */
   def forall(s: Set, p: Int => Boolean): Boolean = {
     def iter(a: Int): Boolean = {
-      if (???) ???
-      else if (???) ???
-      else iter(???)
+      if (!withinBounds(a)) true
+      else if (contains(s, a) && !p(a))   false
+      else iter(a + 1)
     }
-    iter(???)
+    iter(-bound)
   }
 
   /**
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-  def exists(s: Set, p: Int => Boolean): Boolean = ???
+  def exists(s: Set, p: Int => Boolean): Boolean = {
+    !forall(s, (x: Int) => !p(x))
+  }
 
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-  def map(s: Set, f: Int => Int): Set = ???
+  def map(s: Set, f: Int => Int): Set = {
+    def iter(a: Int, temporarySet:Set): Set = {
+      if (!withinBounds(a)) temporarySet
+      else if (contains(s, a) ) iter(a+1, union(temporarySet, singletonSet(f(a))))
+      else iter(a + 1, temporarySet)
+    }
+    iter(-bound, Set())
+  }
 
   /**
    * Displays the contents of a set

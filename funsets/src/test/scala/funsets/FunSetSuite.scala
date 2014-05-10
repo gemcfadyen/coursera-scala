@@ -191,4 +191,41 @@ class FunSetSuite extends FunSuite {
 
     }
   }
+
+  test("iterate through a set of integers, and checks if all entries match the predicate passed in") {
+    new TestSets {
+      val areAllEntriesLessThan3 = forall(setOfNumbersUpToFive, (x: Int) => x < 3)
+      assert(!areAllEntriesLessThan3, "all items are < 3")
+
+      val areAllEntriesLessThan9 = forall(setOfNumbersUpToFive, (x: Int) => x < 9)
+      assert(areAllEntriesLessThan9)
+    }
+  }
+
+  test("determines whether at least one element in the set satisfies the predicate") {
+    new TestSets {
+      val isAtLeastOneElementLessThan3 = exists(setOfNumbersUpToFive, (x: Int) => x < 3)
+      assert(isAtLeastOneElementLessThan3, "no items are < 3")
+
+      val isAtLeastOneElementGreaterThan9 = exists(setOfNumbersUpToFive, (x: Int) => x > 9)
+      assert(!isAtLeastOneElementGreaterThan9)
+
+      val isThereAtLeastOneElementEqualTo1 = exists(setOfNumbersUpToFive, (x: Int) => x == 1)
+      assert(isThereAtLeastOneElementEqualTo1)
+    }
+  }
+
+  test("creates a new set by applying a predicate to each element in an existing set") {
+    new TestSets {
+      val doubleValueSet = map(setOfNumbersUpToFive, (x: Int) => x * 2)
+      assert(contains(doubleValueSet, 2))
+      assert(contains(doubleValueSet, 4))
+      assert(contains(doubleValueSet, 6))
+      assert(contains(doubleValueSet, 8))
+      assert(contains(doubleValueSet, 10))
+      assert(!contains(doubleValueSet, 1))
+      assert(!contains(doubleValueSet, 3))
+      assert(!contains(doubleValueSet, 5))
+    }
+  }
 }
