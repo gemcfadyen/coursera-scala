@@ -1,6 +1,7 @@
 package funsets
 
 import common._
+import scala.annotation.tailrec
 
 /**
  * 2. Purely Functional Sets.
@@ -82,10 +83,25 @@ object FunSets {
     !forall(s, (x: Int) => !p(x))
   }
 
+  //  So using !forall(s, (x:Int)=>!p(x))  actually creates the predicate condition
+  //  else if (contains(s, a) && p(a)) true
+  //  else if (contains(s, a) && !p(a))   false
+  //  which could be added to the original foreach implementation
+
+  // eg: exists could be defined as:
+  //  def iter(a: Int): Boolean = {
+  //    if (!withinBounds(a)) true
+  //    else if (contains(s, a) && p(a)) true
+  //    else if (contains(s, a) && !p(a)) false
+  //    else iter(a + 1)
+  //  }
+  //  iter(-bound)
+
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
   def map(s: Set, f: Int => Int): Set = {
+    @tailrec
     def iter(a: Int, temporarySet:Set): Set = {
       if (!withinBounds(a)) temporarySet
       else if (contains(s, a) ) iter(a+1, union(temporarySet, singletonSet(f(a))))
