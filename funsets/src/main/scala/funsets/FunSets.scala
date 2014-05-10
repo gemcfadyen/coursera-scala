@@ -92,7 +92,7 @@ object FunSets {
   //  def iter(a: Int): Boolean = {
   //    if (!withinBounds(a)) true
   //    else if (contains(s, a) && p(a)) true
-  //    else if (contains(s, a) && !p(a)) false
+  //    else if (contains(s, a) && !p(a)) false  -- IE: if it IS p(a) (as we have !p(a) then return false, but the !forall makes this true
   //    else iter(a + 1)
   //  }
   //  iter(-bound)
