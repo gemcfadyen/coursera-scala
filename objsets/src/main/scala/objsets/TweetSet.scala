@@ -71,7 +71,9 @@ abstract class TweetSet {
    * and be implemented in the subclasses?
    */
   def mostRetweeted: Tweet
+
   def highestTweet(that: Tweet): Tweet
+
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
    * in descending order. In other words, the head of the resulting list should
@@ -121,6 +123,7 @@ class Empty extends TweetSet {
   def mostRetweeted: Tweet = {
     throw new java.util.NoSuchElementException("Can't call mostRetweeted on an Empty")
   }
+
   def highestTweet(that: Tweet): Tweet = that
 
   override def descendingByRetweet: TweetList = Nil
@@ -149,6 +152,7 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     val most: Tweet = mostRetweeted;
     if (most.retweets > that.retweets) most else that
   }
+
   override def mostRetweeted: Tweet = right.highestTweet(left.highestTweet(elem))
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
@@ -247,17 +251,30 @@ object GoogleVsApple {
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-  lazy val googleTweets: TweetSet = ???
-  lazy val appleTweets: TweetSet = ???
+  lazy val googleTweets: TweetSet = tweetsContainingWordsFrom(google)
+  lazy val appleTweets: TweetSet = tweetsContainingWordsFrom(apple)
+
+
+  def tweetsContainingWordsFrom(list:List[String]): TweetSet = {
+    allTweets.filter(tweet => list.exists(word => tweet.text.contains(word)))
+  }
 
   /**
    * A list of all tweets mentioning a keyword from either apple or google,
    * sorted by the number of retweets.
    */
-  lazy val trending: TweetList = ???
+  lazy val trending: TweetList = {
+    val allGoogleAndAppleTweets = googleTweets union appleTweets
+    allGoogleAndAppleTweets.descendingByRetweet
+  }
 }
 
 object Main extends App {
+  println("Google Tweets: ")
+  GoogleVsApple.googleTweets.foreach(t => println(t))
+  println("Apple Tweets: ")
+  GoogleVsApple.appleTweets.foreach(t => println(t))
   // Print the trending tweets
+  println("Trending: ")
   GoogleVsApple.trending foreach println
 }
