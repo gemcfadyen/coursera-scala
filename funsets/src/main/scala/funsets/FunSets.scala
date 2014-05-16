@@ -93,7 +93,7 @@ object FunSets {
   //  So using !forall(s, (x:Int)=>!p(x))  actually creates the predicate condition
   //  else if (contains(s, a) && p(a)) true
   //  else if (contains(s, a) && !p(a)) false
-  
+
    /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */

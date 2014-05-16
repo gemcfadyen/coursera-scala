@@ -70,18 +70,18 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def mostRetweeted: Tweet = ???
-
+  def mostRetweeted: Tweet
+  def highestTweet(that: Tweet): Tweet
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
    * in descending order. In other words, the head of the resulting list should
    * have the highest retweet count.
    *
    * Hint: the method `remove` on TweetSet will be very useful.
-   * Question: Should we implment this method here, or should it remain abstract
+   * Question: Should we implement this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def descendingByRetweet: TweetList = ???
+  def descendingByRetweet: TweetList
 
 
   /**
@@ -118,6 +118,13 @@ class Empty extends TweetSet {
 
   override def combine(elementsForConsideration: TweetSet, accumulatdElements: TweetSet): TweetSet = accumulatdElements
 
+  def mostRetweeted: Tweet = {
+    throw new java.util.NoSuchElementException("Can't call mostRetweeted on an Empty")
+  }
+  def highestTweet(that: Tweet): Tweet = that
+
+  override def descendingByRetweet: TweetList = Nil
+
   /**
    * The following methods are already implemented
    */
@@ -133,36 +140,52 @@ class Empty extends TweetSet {
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
-
-  def add(p: Tweet => Boolean, setToAddTo:TweetSet) : TweetSet = {
-    if (p(elem)) {
-      setToAddTo incl elem
-    }
-    else {
-      setToAddTo
-    }
+  def getLargest(firstValue: Int, secondValue: Int): Int = {
+    if (firstValue > secondValue) firstValue
+    return secondValue
   }
+
+  override def highestTweet(that: Tweet): Tweet = {
+    val most: Tweet = mostRetweeted;
+    if (most.retweets > that.retweets) most else that
+  }
+  override def mostRetweeted: Tweet = right.highestTweet(left.highestTweet(elem))
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
-    add(p, acc)
-    left.filterAcc(p,  add(p, acc))
-    right.filterAcc(p,  add(p, acc))
-  }
+    def add(p: Tweet => Boolean, setToAddTo: TweetSet): TweetSet = {
+      if (p(elem)) {
+        setToAddTo incl elem
+      }
+      else {
+        setToAddTo
+      }
+    }
 
-  def addRelevantElementToSet(setToAddTo: TweetSet): TweetSet = {
-    if (!setToAddTo.contains(elem)) {
-      setToAddTo incl elem
-    }
-    else {
-      setToAddTo
-    }
+    add(p, acc)
+    left.filterAcc(p, add(p, acc))
+    right.filterAcc(p, add(p, acc))
   }
 
   override def combine(elementsForConsideration: TweetSet, accumulatdElements: TweetSet): TweetSet = {
+    def addRelevantElementToSet(setToAddTo: TweetSet): TweetSet = {
+      if (!setToAddTo.contains(elem)) {
+        setToAddTo incl elem
+      }
+      else {
+        setToAddTo
+      }
+    }
     addRelevantElementToSet(elementsForConsideration);
     left.combine(elementsForConsideration, addRelevantElementToSet(accumulatdElements))
     right.combine(elementsForConsideration, addRelevantElementToSet(accumulatdElements))
   }
+
+  override def descendingByRetweet: TweetList = {
+    val mostPopular = mostRetweeted
+    val setWithoutMostPopularElement = this.remove(mostPopular)
+    new Cons(mostPopular, setWithoutMostPopularElement.descendingByRetweet)
+  }
+
 
   /**
    * The following methods are already implemented
