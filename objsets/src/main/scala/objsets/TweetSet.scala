@@ -145,7 +145,7 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
   def getLargest(firstValue: Int, secondValue: Int): Int = {
     if (firstValue > secondValue) firstValue
-    return secondValue
+    else secondValue
   }
 
   override def highestTweet(that: Tweet): Tweet = {

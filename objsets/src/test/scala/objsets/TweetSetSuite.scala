@@ -62,6 +62,12 @@ class TweetSetSuite extends FunSuite {
     }
   }
 
+  test("filter and union: tweets with 321 and 205 retweets"){
+    val set1 = new Empty
+    val set2 = set1.incl(new Tweet("a", "a body", 321))
+    val set3 = set1.incl(new Tweet("b", "b body", 205))
+  }
+
   intercept[java.util.NoSuchElementException] {
     new TestSets {
       set1.mostRetweeted
